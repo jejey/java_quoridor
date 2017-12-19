@@ -6,10 +6,15 @@ public class Pion implements IPion {
 
 	private int x, y;
 	private Couleur couleur;
-	
-	public Pion(int x,int y, Couleur couleur) {
-		this.x = x;
-		this.y = y;
+
+	public Pion(int x, int y, Couleur couleur) {
+		if(Coord.valider(x, y))
+		{
+			this.x = x;
+			this.y = y;
+		}
+		this.x = 0;
+		this.y = 5;
 		this.couleur = couleur;
 	}
 
@@ -29,15 +34,13 @@ public class Pion implements IPion {
 	}
 
 	@Override
-	public boolean isMoveOk(int x, int y, boolean isJumpOk) {
-		if (Coord.valider(x, y)){
-			if(!isJumpOk)
-				return false;
-			
-			return true;
+	public boolean isMoveOk(int xf, int yf, boolean isJumpOk) {
+		boolean ret = false;
+		if (Coord.valider(xf, yf)) {
+			if (isJumpOk || Math.abs(xf - this.x) + Math.abs(yf - this.y) == 1)
+				ret = true;
 		}
-			
-		return false;
+		return ret;
 	}
 
 	@Override
